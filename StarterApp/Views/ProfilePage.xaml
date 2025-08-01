@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="StarterApp.Views.ProfilePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StarterApp.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:ProfilePageModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <Grid Padding="30" RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Error Message -->
+            <Border Grid.Row="1"
+                    BackgroundColor="{AppThemeBinding Light=#FFEBEE, Dark=#1B0000}"
+                    Stroke="{AppThemeBinding Light=#F44336, Dark=#EF5350}"
+                    StrokeThickness="1"
+                    Padding="15"
+                    IsVisible="{Binding HasError}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="{AppThemeBinding Light=#D32F2F, Dark=#EF5350}"
+                       FontSize="14" />
+            </Border>
+
+            <!-- First Name Entry -->
+            <Border Grid.Row="2"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                    StrokeThickness="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{Binding FirstName}"
+                       Placeholder="First Name"
+                       ReturnType="Next"
+                       Margin="15,10" />
+            </Border>
+
+            <!-- Last Name Entry -->
+            <Border Grid.Row="3"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                    StrokeThickness="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{Binding LastName}"
+                       Placeholder="Last Name"
+                       ReturnType="Next"
+                       Margin="15,10" />
+            </Border>
+
+            <!-- Save Button -->
+            <Button Grid.Row="8"
+                    Text="Save Details"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    TextColor="White"
+                    HeightRequest="50"
+                    CornerRadius="8"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    IsEnabled="true" />
+
+            <!-- Footer -->
+            <StackLayout Grid.Row="9" Spacing="10" Margin="0,20,0,0">
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                  IsRunning="{Binding IsBusy}"
+                                  Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>
