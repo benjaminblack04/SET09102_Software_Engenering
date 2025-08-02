@@ -13,6 +13,9 @@ public interface IAuthenticationService
     Task<AuthenticationResult> LoginAsync(string email, string password);
     Task<AuthenticationResult> RegisterAsync(string firstName, string lastName, string email, string password);
     Task LogoutAsync();
+
+    Task<AuthenticationResult> SetFirstnameAsync(string firstName);
+    Task<AuthenticationResult> SetLastnameAsync(string lastName);
     
     bool HasRole(string roleName);
     bool HasAnyRole(params string[] roleNames);
