@@ -13,14 +13,7 @@
         <Grid Padding="30" RowSpacing="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -39,33 +32,34 @@
                        FontSize="14" />
             </Border>
 
-            <!-- First Name Entry -->
-            <Border Grid.Row="2"
-                    Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
-                    StrokeThickness="1"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
-                <Entry Text="{Binding FirstName}"
-                       Placeholder="First Name"
-                       ReturnType="Next"
-                       Margin="15,10" />
-            </Border>
+            <!-- Main Content -->
+            <StackLayout Grid.Row="1" 
+                        IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                        Spacing="15">
+                <!-- First Name Entry -->
+                <StackLayout>
+                    <Label Text="First Name" 
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           Margin="0,0,0,5" />
+                    <Entry Text="{Binding FirstName}"
+                           Placeholder="Enter first name"
+                           FontSize="16"
+                           BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}" />
+                </StackLayout>
 
-            <!-- Last Name Entry -->
-            <Border Grid.Row="3"
-                    Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
-                    StrokeThickness="1"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
-                <Entry Text="{Binding LastName}"
-                       Placeholder="Last Name"
-                       ReturnType="Next"
-                       Margin="15,10" />
-            </Border>
+                <!-- Last Name Entry -->
+                <StackLayout>
+                    <Label Text="Last Name" 
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           Margin="0,0,0,5" />
+                    <Entry Text="{Binding LastName}"
+                           Placeholder="Enter last name"
+                           FontSize="16"
+                           BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}" />
+                </StackLayout>
+            </StackLayout>
 
             <!-- Save Button -->
             <Button Grid.Row="8"
