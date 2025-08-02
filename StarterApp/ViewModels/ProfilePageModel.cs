@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StarterApp.Services;
 using System.Windows.Input;
 
 namespace StarterApp.ViewModels;
@@ -17,6 +18,8 @@ public partial class ProfilePageModel : BaseViewModel
 
     [ObservableProperty]
     private string lastName = string.Empty;
+    
+    private readonly IAuthenticationService _authService;
 
     /// @brief Initializes a new instance of the AboutViewModel class
     /// @details Sets up the ShowMoreInfoCommand with async relay command
@@ -24,6 +27,17 @@ public partial class ProfilePageModel : BaseViewModel
     {
         Title = "Profile";
         ClearError();
+    }
+
+    public ProfilePageModel(IAuthenticationService authService)
+    {
+        _authService = authService;
+
+        Title = "Profile";
+        ClearError();
+
+        firstName = authService.CurrentUser.FirstName;
+        lastName = authService.CurrentUser.LastName;
     }
 
     [RelayCommand]
