@@ -32,6 +32,8 @@ public class AppDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<Event> Events { get; set; }
+    public DbSet<EventAttendees> EventAttendees { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -68,6 +70,31 @@ public class AppDbContext : DbContext
             entity.HasOne(ur => ur.Role)
                   .WithMany(r => r.UserRoles)
                   .HasForeignKey(ur => ur.RoleId);
+        });
+
+        // Configure Event entity
+        modelBuilder.Entity<Event>(entity =>
+        {
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Type).HasMaxLength(100);
+            
+            entity.HasOne(e => e.User)
+                  .WithMany()
+                  .HasForeignKey(e => e.SpeakerId);
+        });
+
+        // Configure EventAttendees entity
+        modelBuilder.Entity<EventAttendees>(entity =>
+        {
+            entity.HasKey(ea => new { ea.EventId, ea.UserId });
+
+            entity.HasOne(ea => ea.Event)
+                  .WithMany()
+                  .HasForeignKey(ea => ea.EventId);
+
+            entity.HasOne(ea => ea.User)
+                  .WithMany()
+                  .HasForeignKey(ea => ea.UserId);
         });
     }
 
