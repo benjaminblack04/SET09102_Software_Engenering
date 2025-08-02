@@ -54,11 +54,21 @@ public partial class ProfilePageModel : BaseViewModel
             IsBusy = true;
             ClearError();
 
-            SetError("Implement me!");
+            var result_fn = await _authService.SetFirstnameAsync(firstName);
+            var result_ln = await _authService.SetLastnameAsync(lastName);
+
+            if (result_fn.IsSuccess || result_ln.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert("Success", "Profile changed succesfully!.", "OK");
+            }
+            else
+            {
+                SetError("Couldn't save profile!");
+            }
         }
         catch (Exception ex)
         {
-            SetError($"Registration failed: {ex.Message}");
+            SetError($"Save failed: {ex.Message}");
         }
         finally
         {
