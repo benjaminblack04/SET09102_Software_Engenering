@@ -114,6 +114,43 @@ public class AuthenticationService : IAuthenticationService
         return Task.CompletedTask;
     }
 
+    public async Task<AuthenticationResult> SetFirstnameAsync(string firstName)
+    {
+        if (_currentUser == null) return new AuthenticationResult(false, $"Current user not valid");
+
+        try
+        {
+            _currentUser.FirstName = firstName.Trim();
+            _context.Users.Update(_currentUser);
+            _currentUser.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return new AuthenticationResult(true, "Firstname change successful");
+        }
+        catch (Exception ex)
+        {
+            return new AuthenticationResult(false, $"Firstname change failed: {ex.Message}");
+        }
+    }
+    public async Task<AuthenticationResult> SetLastnameAsync(string lastName)
+    {
+        if (_currentUser == null) return new AuthenticationResult(false, $"Current user not valid");
+        
+        try
+        {
+            _currentUser.LastName = lastName.Trim();
+            _context.Users.Update(_currentUser);
+            _currentUser.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return new AuthenticationResult(true, "Lastname change successful");
+        }
+        catch (Exception ex)
+        {
+            return new AuthenticationResult(false, $"Lastname change failed: {ex.Message}");
+        }
+    }
+
     public bool HasRole(string roleName)
     {
         return _currentUserRoles.Contains(roleName, StringComparer.OrdinalIgnoreCase);
