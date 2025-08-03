@@ -8,13 +8,13 @@ namespace StarterApp.Database.Models;
 public class EventAttendees
 {
     [Required]
-    public int EventId { get; set; }
+    public int Event_Id { get; set; }
     [Required]
-    public int UserId { get; set; }
+    public int Attendee_Id { get; set; }
 
     // Navigation properties with proper foreign key attributes
-    [ForeignKey(nameof(EventId))]
+    [ForeignKey(nameof(Event_Id))]
     public Event Event { get; set; } = null!;
-    [ForeignKey(nameof(UserId))]
+    [ForeignKey(nameof(Attendee_Id))]
     public User User { get; set; } = null!;
 }

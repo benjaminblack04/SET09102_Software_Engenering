@@ -86,15 +86,15 @@ public class AppDbContext : DbContext
         // Configure EventAttendees entity
         modelBuilder.Entity<EventAttendees>(entity =>
         {
-            entity.HasKey(ea => new { ea.EventId, ea.UserId });
+            entity.HasKey(ea => new { ea.Event_Id, ea.Attendee_Id });
 
             entity.HasOne(ea => ea.Event)
                   .WithMany()
-                  .HasForeignKey(ea => ea.EventId);
+                  .HasForeignKey(ea => ea.Event_Id);
 
             entity.HasOne(ea => ea.User)
                   .WithMany()
-                  .HasForeignKey(ea => ea.UserId);
+                  .HasForeignKey(ea => ea.Attendee_Id);
         });
     }
 

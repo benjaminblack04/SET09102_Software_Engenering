@@ -3,7 +3,7 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:StarterApp.ViewModels"
-             Title="{Binding Title}">
+             Title="Profile">
 
     <ContentPage.BindingContext>
         <vm:ProfilePageModel />
@@ -13,7 +13,8 @@
         <Grid Padding="30" RowSpacing="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -72,6 +73,77 @@
                     FontSize="16"
                     FontAttributes="Bold"
                     IsEnabled="true" />
+
+            <!-- Users List -->
+        <RefreshView Grid.Row="2"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding Events}"
+                           SelectionMode="None">
+                    
+                    <CollectionView.EmptyView>
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label Text="No events found"
+                                FontSize="18"
+                                TextColor="Gray"
+                                HorizontalOptions="Center" />
+                            <Label Text="Why not check one out?"
+                                FontSize="14"
+                                TextColor="Gray"
+                                HorizontalOptions="Center"
+                                Margin="0,5,0,0" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:EventItem">
+                            <Grid Padding="15,10">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="1" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Is Speaker -->
+                                <Label Grid.Row="0"
+                                   Text="{Binding IsSpeaker}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="Red" />
+
+                                <!-- Event Name -->
+                                <Label Grid.Row="1"
+                                   Text="{Binding EventName}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="Black" />
+
+                                <!-- Event Type -->
+                                <Label Grid.Row="2"
+                                   Text="{Binding EventTypeText}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="Black" />
+
+                                <!-- Speaker Name -->
+                                <Label Grid.Row="3"
+                                   Text="{Binding SpeakerName}"
+                                   FontSize="16"
+                                   TextColor="Gray" />
+
+                                <!-- Separator -->
+                                <BoxView Grid.Row="4"
+                                        BackgroundColor="LightGray"
+                                        HeightRequest="1"
+                                        Margin="0,10,0,0" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
 
             <!-- Footer -->
             <StackLayout Grid.Row="9" Spacing="10" Margin="0,20,0,0">
