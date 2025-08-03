@@ -19,7 +19,7 @@
             </Grid.RowDefinitions>
 
             <!-- Error Message -->
-            <Border Grid.Row="1"
+            <Border Grid.Row="0"
                     BackgroundColor="{AppThemeBinding Light=#FFEBEE, Dark=#1B0000}"
                     Stroke="{AppThemeBinding Light=#F44336, Dark=#EF5350}"
                     StrokeThickness="1"
@@ -35,11 +35,10 @@
 
             <!-- Main Content -->
             <StackLayout Grid.Row="1" 
-                        IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
                         Spacing="15">
                 <!-- First Name Entry -->
                 <StackLayout>
-                    <Label Text="First Name" 
+                    <Label Text="First Name"
                            FontSize="14"
                            FontAttributes="Bold"
                            Margin="0,0,0,5" />
@@ -63,7 +62,7 @@
             </StackLayout>
 
             <!-- Save Button -->
-            <Button Grid.Row="8"
+            <Button Grid.Row="2"
                     Text="Save Details"
                     Command="{Binding SaveCommand}"
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
@@ -75,7 +74,7 @@
                     IsEnabled="true" />
 
             <!-- Users List -->
-        <RefreshView Grid.Row="2"
+        <RefreshView Grid.Row="3"
                      IsRefreshing="{Binding IsRefreshing}"
                      Command="{Binding RefreshCommand}">
             <CollectionView ItemsSource="{Binding Events}"
