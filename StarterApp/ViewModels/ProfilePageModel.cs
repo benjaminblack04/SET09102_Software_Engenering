@@ -102,17 +102,14 @@ public partial class ProfilePageModel : BaseViewModel
             _events.Clear();
             foreach (var ev in events)
             {
-                SetError("Loading events...");
                 var speaker = await _context.Users.FindAsync(ev.SpeakerId);
                 // Ok so I messed up the naming of the event and event_attendees tables so they're in different cases for some reason
                 var attendeeCount = await _context.EventAttendees.CountAsync(ea => ea.Event_Id == ev.Id);
                 if (speaker == null)
                 {
-                    SetError("Speaker not found for event.");
                     System.Diagnostics.Debug.WriteLine($"Speaker with ID {ev.SpeakerId} not found for event {ev.Name}");
                     continue;
                 }
-                SetError("Loading event details...");
                 var eventItem = new EventItem
                 {
                     SpeakerName = $"Speaker: {speaker.FullName}",
@@ -121,25 +118,23 @@ public partial class ProfilePageModel : BaseViewModel
                     EventDateTime = ev.Happening.ToString("f"),
                     EventType = ev.Type.ToString()
                 };
-                SetError("Checking event attendance...");
                 // Make sure the current user is at the event
                 var isAttending = await _context.EventAttendees.AnyAsync(ea => ea.Event_Id == ev.Id &&
                                                                          ea.Attendee_Id == _authService.CurrentUser.Id);
                 if (!isAttending)
                     continue;
-                SetError("Event attendance confirmed.");
                 // Is the current user the speaker of the event
                 if (ev.SpeakerId == _authService.CurrentUser.Id)
                 {
                     eventItem.SpeakerName = "Speaker: You!";
                     eventItem.IsSpeaker = "You are the speaker of this event!";
                 }
-                SetError("Adding event to list...");
                 _events.Add(eventItem);
             }
         }
         catch (Exception ex)
         {
+            SetError($"Sorry, we're having some issues loading events. Please try again later.");
             System.Diagnostics.Debug.WriteLine($"Error loading events: {ex.Message}");
         }
         finally
@@ -153,7 +148,6 @@ public partial class ProfilePageModel : BaseViewModel
         IsRefreshing = true;
         await LoadEventsAsync();
         IsRefreshing = false;
-        SetError("Events refreshed successfully.");
     }
 
     [RelayCommand]
