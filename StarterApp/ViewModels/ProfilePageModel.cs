@@ -20,6 +20,8 @@ public partial class ProfilePageModel : BaseViewModel
     private bool _isRefreshing = false;
     private bool _isLoading = false;
 
+    public bool IsAdmin => _authService.HasRole(RoleConstants.Admin);
+
     public bool IsRefreshing
     {
         get => _isRefreshing;
@@ -39,6 +41,8 @@ public partial class ProfilePageModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+
+    public ObservableCollection<string> RoleFilterOptions { get; }
 
     public ObservableCollection<EventItem> Events
     {
@@ -82,6 +86,12 @@ public partial class ProfilePageModel : BaseViewModel
         RefreshCommand = new Command(async () => await RefreshEventsAsync());
         LoadEventsCommand = new Command(async () => await LoadEventsAsync());
 
+        RoleFilterOptions = new ObservableCollection<string> { "All" };
+        foreach (var role in RoleConstants.AllRoles)
+        {
+            RoleFilterOptions.Add(role);
+        }
+
         // Load events when view model is created
         _ = Task.Run(LoadEventsAsync);
     }
@@ -110,6 +120,11 @@ public partial class ProfilePageModel : BaseViewModel
                     System.Diagnostics.Debug.WriteLine($"Speaker with ID {ev.SpeakerId} not found for event {ev.Name}");
                     continue;
                 }
+                // Make sure the current user is at the event, or the user is an admin 'cause we want admins to see all events
+                var isAttending = await _context.EventAttendees.AnyAsync(ea => ea.Event_Id == ev.Id &&
+                                                                         ea.Attendee_Id == _authService.CurrentUser.Id);
+                if (!IsAdmin && !isAttending)
+                    continue;
                 var eventItem = new EventItem
                 {
                     SpeakerName = $"Speaker: {speaker.FullName}",
@@ -118,11 +133,6 @@ public partial class ProfilePageModel : BaseViewModel
                     EventDateTime = ev.Happening.ToString("f"),
                     EventType = ev.Type.ToString()
                 };
-                // Make sure the current user is at the event
-                var isAttending = await _context.EventAttendees.AnyAsync(ea => ea.Event_Id == ev.Id &&
-                                                                         ea.Attendee_Id == _authService.CurrentUser.Id);
-                if (!isAttending)
-                    continue;
                 // Is the current user the speaker of the event
                 if (ev.SpeakerId == _authService.CurrentUser.Id)
                 {
