@@ -44,6 +44,7 @@ public static class MauiProgram
         builder.Services.AddTransient<TempPage>();
         builder.Services.AddTransient<ProfilePageModel>();
         builder.Services.AddTransient<ProfilePage>();
+        builder.Services.AddTransient<NotificationPageViewModel>();
     
 
 #if DEBUG

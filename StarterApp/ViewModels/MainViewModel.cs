@@ -123,6 +123,18 @@ public partial class MainViewModel : BaseViewModel
         await _navigationService.NavigateToAsync("UserListPage");
     }
 
+    [RelayCommand]
+    private async Task NavigateToNotificationTestAsync()
+    {
+        if (!IsAdmin)
+        {
+            await Application.Current.MainPage.DisplayAlert("Access Denied", "You don't have permission to access admin features.", "OK");
+            return;
+        }
+        
+        await _navigationService.NavigateToAsync("NotificationPage");
+    }
+
     /// @brief Refreshes the dashboard data
     /// @details Relay command that reloads user data and simulates a refresh operation
     /// @return A task representing the asynchronous refresh operation

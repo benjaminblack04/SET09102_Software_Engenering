@@ -185,6 +185,9 @@ public partial class ProfilePageModel : BaseViewModel
             {
                 SetError("Couldn't save profile!");
             }
+
+            OnPropertyChanged(nameof(FirstName));
+            OnPropertyChanged(nameof(LastName));
         }
         catch (Exception ex)
         {
