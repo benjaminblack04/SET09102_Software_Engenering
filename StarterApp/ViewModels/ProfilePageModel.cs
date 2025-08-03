@@ -128,7 +128,7 @@ public partial class ProfilePageModel : BaseViewModel
                 var eventItem = new EventItem
                 {
                     SpeakerName = $"Speaker: {speaker.FullName}",
-                    AttendeeCount = attendeeCount,
+                    AttendeeCount = $"Attendees: {attendeeCount}",
                     EventName = ev.Name,
                     EventDateTime = ev.Happening.ToString("f"),
                     EventType = ev.Type.ToString()
@@ -224,7 +224,7 @@ public partial class ProfilePageModel : BaseViewModel
 public class EventItem
 {
     public string SpeakerName { get; set; } = string.Empty;
-    public int AttendeeCount { get; set; } = 0;
+    public string AttendeeCount { get; set; } = string.Empty;
     public string EventName { get; set; } = string.Empty;
     public string EventDateTime { get; set; } = string.Empty;
     public string EventType { get; set; } = string.Empty;
