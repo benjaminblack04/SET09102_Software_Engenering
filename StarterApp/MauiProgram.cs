@@ -24,6 +24,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
+        builder.Services.AddSingleton<INotificationService, NotificationService>();
 
         builder.Services.AddSingleton<AppShellViewModel>();
         builder.Services.AddSingleton<AppShell>();
