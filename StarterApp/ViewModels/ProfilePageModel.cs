@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using StarterApp.Database.Data;
+using StarterApp.Database.Models;
 using StarterApp.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -132,15 +133,12 @@ public partial class ProfilePageModel : BaseViewModel
                     SpeakerName = $"Speaker: {speaker.FullName}",
                     AttendeeCount = $"Attendees: {attendeeCount}",
                     EventName = ev.Name,
-                    EventDateTime = ev.Happening.ToString("f"),
-                    EventType = ev.Type.ToString()
+                    EventDateTime = ev.Happening.ToString("f") ?? "Unknown date",
+                    EventType = ev.Type.ToString() ?? "Guess I'm empty"
                 };
                 // Is the current user the speaker of the event
                 if (ev.SpeakerId == _authService.CurrentUser.Id)
-                {
-                    eventItem.SpeakerName = "Speaker: You!";
-                    eventItem.IsSpeaker = "You are the speaker of this event!";
-                }
+                    eventItem.SpeakerName = "You are the speaker of this event!";
                 _events.Add(eventItem);
             }
         }
@@ -230,5 +228,4 @@ public class EventItem
     public string EventName { get; set; } = string.Empty;
     public string EventDateTime { get; set; } = string.Empty;
     public string EventType { get; set; } = string.Empty;
-    public string IsSpeaker { get; set; } = string.Empty;
 }
