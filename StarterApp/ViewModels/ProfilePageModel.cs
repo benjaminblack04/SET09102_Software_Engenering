@@ -113,8 +113,10 @@ public partial class ProfilePageModel : BaseViewModel
             foreach (var ev in events)
             {
                 var speaker = await _context.Users.FindAsync(ev.SpeakerId);
-                // Ok so I messed up the naming of the event and event_attendees tables so they're in different cases for some reason
-                var attendeeCount = await _context.EventAttendees.CountAsync(ea => ea.Event_Id == ev.Id);
+                // Ok so I messed up the naming of the event and event_attendees tables so
+                // they're in different cases for some reason
+                var attendeeCount = await _context.EventAttendees.CountAsync(ea => ea.Event_Id == ev.Id&&
+                                                                             ea.Attendee_Id != ev.SpeakerId);
                 if (speaker == null)
                 {
                     System.Diagnostics.Debug.WriteLine($"Speaker with ID {ev.SpeakerId} not found for event {ev.Name}");
