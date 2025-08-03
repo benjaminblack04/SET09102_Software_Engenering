@@ -75,7 +75,7 @@
                     IsEnabled="true" />
 
         <StackLayout Grid.Row="3">
-            <Label Text="Events" 
+            <Label Text="Your Events" 
                    FontSize="21"
                    FontAttributes="Bold"
                    Margin="0,0,0,5" />
@@ -105,21 +105,15 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="vm:EventItem">
                             <Grid Padding="15,10">
-
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="1" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="5" />
                                 </Grid.RowDefinitions>
-
-                                <!-- Is Speaker -->
-                                <Label Grid.Row="0"
-                                   Text="{Binding IsSpeaker}"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   TextColor="Red" />
 
                                 <!-- Event Name -->
                                 <Label Grid.Row="1"
@@ -130,20 +124,33 @@
 
                                 <!-- Event Type -->
                                 <Label Grid.Row="2"
-                                   Text="{Binding EventTypeText}"
+                                   Text="{Binding EventType}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="Black" />
+
+                                <!-- Event Date -->
+                                <Label Grid.Row="3"
+                                   Text="{Binding EventDateTime}"
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="Black" />
 
                                 <!-- Speaker Name -->
-                                <Label Grid.Row="3"
+                                <Label Grid.Row="4"
                                    Text="{Binding SpeakerName}"
                                    FontSize="16"
                                    TextColor="Gray" />
 
+                                <!-- for some reason the speaker name is inside of the separator -->
+                                <Label Grid.Row="5"
+                                   Text="{Binding AttendeeCount}"
+                                   FontSize="16"
+                                   TextColor="Gray" />
+
                                 <!-- Separator -->
-                                <BoxView Grid.Row="4"
-                                        BackgroundColor="LightGray"
+                                <BoxView Grid.Row="6"
+                                        BackgroundColor="Black"
                                         HeightRequest="1"
                                         Margin="0,10,0,0" />
                             </Grid>
