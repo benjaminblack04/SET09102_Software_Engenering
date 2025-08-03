@@ -16,6 +16,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- Error Message -->
@@ -73,8 +74,15 @@
                     FontAttributes="Bold"
                     IsEnabled="true" />
 
+        <StackLayout Grid.Row="3">
+            <Label Text="Events" 
+                   FontSize="21"
+                   FontAttributes="Bold"
+                   Margin="0,0,0,5" />
+        </StackLayout>
+
         <!-- Events List -->
-        <RefreshView Grid.Row="3"
+        <RefreshView Grid.Row="4"
                      IsRefreshing="{Binding IsRefreshing}"
                      Command="{Binding RefreshCommand}">
             <CollectionView ItemsSource="{Binding Events}"
