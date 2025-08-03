@@ -73,7 +73,7 @@
                     FontAttributes="Bold"
                     IsEnabled="true" />
 
-            <!-- Users List -->
+        <!-- Events List -->
         <RefreshView Grid.Row="3"
                      IsRefreshing="{Binding IsRefreshing}"
                      Command="{Binding RefreshCommand}">
